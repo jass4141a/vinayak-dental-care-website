@@ -1,0 +1,7 @@
+tunnel: YOUR-TUNNEL-UUID
+credentials-file: 'C:\Users\YOUR-WINDOWS-USERNAME\.cloudflared\YOUR-TUNNEL-UUID.json'
+
+ingress:
+  - hostname: api.vinayakdentalcare.org
+    service: http://127.0.0.1:8081
+  - service: http_status:404

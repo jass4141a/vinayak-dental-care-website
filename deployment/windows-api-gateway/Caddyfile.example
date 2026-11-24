@@ -1,0 +1,25 @@
+{
+    admin off
+}
+
+# Listen only on this computer. The wildcard site address accepts the public
+# API hostname sent by Cloudflare Tunnel; bind prevents LAN exposure.
+http://:8081 {
+    bind 127.0.0.1
+
+    @public_api path_regexp public_api ^/public-api/(clinic|availability|book|reviews)$
+
+    handle @public_api {
+        reverse_proxy 127.0.0.1:8765 {
+            header_up Host api.vinayakdentalcare.org
+            # cloudflared supplies CF-Connecting-IP; preserve it for rate limits.
+            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+            header_up X-Forwarded-Proto https
+        }
+    }
+
+    # Deny staff UI, patient data, and every unlisted path.
+    handle {
+        respond "Not found" 404
+    }
+}
