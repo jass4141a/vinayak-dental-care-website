@@ -1,0 +1,25 @@
+# Never commit credentials or local machine configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+.cloudflared/
+config.yml
+
+# Never commit clinic databases, exports, backups, or patient files
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+backups/
+patient-data/
+exports/
+
+# Local editor / OS files
+.DS_Store
+Thumbs.db
+.vscode/
